@@ -1,11 +1,11 @@
 package com.green.memoserver;
 
-import com.green.memoserver.model.MemoGetReq;
-import com.green.memoserver.model.MemoPostReq;
-import com.green.memoserver.model.MemoPutReq;
+import com.green.memoserver.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -23,17 +23,17 @@ public class MemoController {
         return result == 1 ? "저장 성공" : "저장 실패";
     }
 
-    //Read
-    @GetMapping
-    public String getMemo(@ModelAttribute MemoGetReq req) {
-        log.info("req={}", req);
-        return "메모 리스트";
-    }
+//    //Read
+//    @GetMapping
+//    public String getMemo(@ModelAttribute MemoGetReq req) {
+//        log.info("req={}", req);
+//        return "메모 리스트";
+//    }
 
     @GetMapping("{memoId}")
-    public String getMemo(@PathVariable int memoId) {
+    public MemoGetOneRes findById(@PathVariable int memoId) {
         log.info("memoId={}", memoId);
-        return "메모 하나";
+        return memoService.findById(memoId);
     }
 
 
@@ -50,4 +50,10 @@ public class MemoController {
         log.info("memoId={}", memoId);
         return "삭제 성공";
     }
+
+    @GetMapping
+    public List<MemoGetRes> findAll(@ModelAttribute MemoGetReq p) {
+        return  memoService.findAll(p);
+    }
+
 }

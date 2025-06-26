@@ -5,4 +5,7 @@ spring:
     password: green502
 
 mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+#    ?????? ????
   mapper-locations: mappers/**/*.xml

@@ -8,5 +8,22 @@
         SET title = #{title}
         , content = #{ctnts}
     </insert>
+    <select id="findAll">
+        SELECT id, title, created_at
+        FROM memo
+        <if test="searchText !=null and searchText != ''">
+            WHERE title LIKE '%${searchText}%'
+            OR content LIKE '%${searchText}%'
+<!--            $ 가 들어가면 '' 빼고 정보 그대로 넣어줌-->
+        </if>pu
+        ORDER BY id DESC
+    </select>
+    <select id="findById">
+        SELECT *
+        FROM memo
+        WHERE id = #{id}
+
+
+    </select>
 
 </mapper>
