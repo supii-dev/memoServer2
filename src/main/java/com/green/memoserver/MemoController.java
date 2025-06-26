@@ -21,21 +21,25 @@ public class MemoController { // 빈등록
     @PostMapping
     public String postMemo(@RequestBody MemoPostReq req){ //애노테이션 안넣으면 form 데이터로 들어온다고 생각함
         log.info("req={}", req);
-        return "저장성공";
+        int result = memoService.save(req);
+        return result == 1 ? "저장성공":"저장실패";
     }
-    //Read
     @GetMapping
-    // public String getMemo(@RequestParam(name="search_text",required=false) String searchText){ // 반드시 같은 키값이 있어야함  required
-    // int 를 쓰고싶으면 앞에 Integer 넣어주면됨
-    public String getMemo(@RequestParam (name = "search_text", required = false) String searchText
-    ,@RequestParam(required = false) Integer page) {
-        log.info("search={}","page={}", searchText, page);
-        MemoGetReq.builder()
-                  .searchText(searchText)
-                  .page(page)
-                  .build();
+    public String getMemo(@ModelAttribute MemoGetReq req){
+        log.info("req={}", req);
         return "메모리스트";
     }
+    // 반드시 같은 키값이 있어야함  required
+    // int 를 쓰고싶으면 앞에 Integer 넣어주면됨
+//    public String getMemo(@RequestParam (name = "search_text", required = false) String searchText
+//            ,@RequestParam(required = false) Integer page) {
+//        log.info("search={}", "page={}", searchText, page);
+//        MemoGetReq req = MemoGetReq.builder()
+//                                   .searchText(searchText)
+//                                   .page(page)
+//                                   .build();
+//        MemoService.getMemoList(searchText,page);
+
     @GetMapping("{id}")
     public String getMemoById(@PathVariable int id){
         log.info("id={}",id);
