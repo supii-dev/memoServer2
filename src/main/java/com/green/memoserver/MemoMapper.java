@@ -13,6 +13,7 @@ public interface MemoMapper {
     int save(MemoPostReq p);
     List<MemoGetRes> findAll(MemoGetReq p);
     MemoGetOneRes findById(int id);
+    int deleteById(int id);
 
 }
 //res 응답 req 요청

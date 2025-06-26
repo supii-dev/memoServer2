@@ -22,8 +22,11 @@
         SELECT *
         FROM memo
         WHERE id = #{id}
-
-
     </select>
+    <delete id="deleteById">
+        DELETE FROM memo
+        WHERE id = #{id}
+
+    </delete>
 
 </mapper>

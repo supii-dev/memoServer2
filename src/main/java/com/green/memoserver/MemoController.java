@@ -46,9 +46,9 @@ public class MemoController {
 
     //Delete
     @DeleteMapping
-    public String deleteMemo(@RequestParam(name = "memo_id") int memoId) {
-        log.info("memoId={}", memoId);
-        return "삭제 성공";
+    public int deleteMemo(@RequestParam int id) {
+        log.info("memoId={}", id);
+        return memoService.deleteById(id);
     }
 
     @GetMapping

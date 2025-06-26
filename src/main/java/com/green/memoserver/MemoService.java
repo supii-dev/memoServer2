@@ -23,6 +23,9 @@ public class MemoService {
     public MemoGetOneRes findById(int p) {
         return memoMapper.findById(p);
     }
+    public int deleteById(int p) {
+        return memoMapper.deleteById(p);
+    }
 
 
 
