@@ -7,57 +7,47 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
-@RestController
-@RequestMapping("api/memo")
 @Slf4j
-public class MemoController { // 빈등록
+@RestController
+@RequiredArgsConstructor
+//공통 URL
+@RequestMapping("api/memo")
+public class MemoController {
     private final MemoService memoService;
-    //c
-    //r
-    //u
-    //d
 
+    //Create
     @PostMapping
-    public String postMemo(@RequestBody MemoPostReq req){ //애노테이션 안넣으면 form 데이터로 들어온다고 생각함
+    public String postMemo(@RequestBody MemoPostReq req) { //JSON로 넘어오는구나
         log.info("req={}", req);
-        int result = memoService.save(req);
-        return result == 1 ? "저장성공":"저장실패";
+        int result =  memoService.save(req);
+        return result == 1 ? "저장 성공" : "저장 실패";
     }
+
+    //Read
     @GetMapping
-    public String getMemo(@ModelAttribute MemoGetReq req){
+    public String getMemo(@ModelAttribute MemoGetReq req) {
         log.info("req={}", req);
-        return "메모리스트";
+        return "메모 리스트";
     }
-    // 반드시 같은 키값이 있어야함  required
-    // int 를 쓰고싶으면 앞에 Integer 넣어주면됨
-//    public String getMemo(@RequestParam (name = "search_text", required = false) String searchText
-//            ,@RequestParam(required = false) Integer page) {
-//        log.info("search={}", "page={}", searchText, page);
-//        MemoGetReq req = MemoGetReq.builder()
-//                                   .searchText(searchText)
-//                                   .page(page)
-//                                   .build();
-//        MemoService.getMemoList(searchText,page);
 
-    @GetMapping("{id}")
-    public String getMemoById(@PathVariable int id){
-        log.info("id={}",id);
-        return "메모하나";
- }
- //업데이트 JSON
+    @GetMapping("{memoId}")
+    public String getMemo(@PathVariable int memoId) {
+        log.info("memoId={}", memoId);
+        return "메모 하나";
+    }
+
+
+    //Update
     @PutMapping
-    public String putMemo(@RequestBody MemoPutReq req){
-        log.info("MemoId={}",req.getMemoId());
-        return "수정완료";
+    public String putMemo(@RequestBody MemoPutReq req) { //JSON로 넘어오는구나
+        log.info("req={}", req);
+        return "수정 성공";
     }
+
+    //Delete
     @DeleteMapping
-    public String deleteMemo(@RequestParam("memo_id") int memoId){
-        log.info("memoId={}",memoId);
-        return "삭제완료";
+    public String deleteMemo(@RequestParam(name = "memo_id") int memoId) {
+        log.info("memoId={}", memoId);
+        return "삭제 성공";
     }
-
 }
-// @RequestParam
-// memoService.getMemoList(searchText,page);
-
