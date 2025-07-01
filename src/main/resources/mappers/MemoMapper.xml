@@ -12,21 +12,35 @@
         SELECT id, title, created_at
         FROM memo
         <if test="searchText !=null and searchText != ''">
-            WHERE title LIKE '%${searchText}%'
-            OR content LIKE '%${searchText}%'
+        <bind name="pattern" value="'%' + _parameter.getSechText()+'%'"/>
+            WHERE title LIKE #{pattern}
+            OR content LIKE #{pattern}
+           <!-- WHERE title LIKE '%${searchText}%'
+            OR content LIKE '%${searchText}%'-->
+<!--            샾을넣어서 홑따옴표가 또들어가면 신텍스에러-->
 <!--            $ 가 들어가면 '' 빼고 정보 그대로 넣어줌-->
-        </if>pu
+        </if>
         ORDER BY id DESC
     </select>
     <select id="findById">
         SELECT *
         FROM memo
-        WHERE id = #{id}
+        WHERE id = #{memoId}
     </select>
+    <update id="modify">
+        UPDATE memo
+        SET
+        title = #{title}
+        ,content = #{ctnts}
+        WHERE id = #{memoId}
+    </update>
     <delete id="deleteById">
         DELETE FROM memo
-        WHERE id = #{id}
+        WHERE id = #{memoId}
 
     </delete>
 
 </mapper>
+
+<!--DAO : Mapper + .xml 사용하여 정보를 만들겠다-->
+<!--신텍스에러뜨면 여기부터 보기-->
